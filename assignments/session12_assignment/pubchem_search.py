@@ -7,10 +7,10 @@ from pathlib import Path
 
 # define ROOT directory as parent folder
 ROOT = Path(__file__).resolve().parents[0]
-DATA = ROOT/"data"
+DATA = ROOT/"output"
 
 # Load your ChEMBL dataset
-chembl_df = pd.read_csv(DATA / "filename.csv")  # use your actual filename and path
+chembl_df = pd.read_csv(DATA / "chembl_sample.csv")  # use your actual filename and path
 smiles_list = chembl_df["smiles"].dropna().tolist() # use the column tag with the "smiles"
 
 records = []
@@ -41,5 +41,5 @@ for smi in tqdm(smiles_list):  # limit to 200 compounds for testing, tqdm just a
         print(f"Failed for {smi[:20]}...: {e}")
 
 pubchem_df = pd.DataFrame(records)
-pubchem_df.to_csv(r"[path]\antibio_pubchem_descr.csv", index=False) # use your path and specified filename
+pubchem_df.to_csv(DATA / "antibio_pubchem_descr.csv", index=False) # use your path and specified filename
 print(f"Saved {len(pubchem_df)} entries.")
